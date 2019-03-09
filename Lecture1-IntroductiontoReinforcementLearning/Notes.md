@@ -68,9 +68,14 @@ Whereas in **Planning** a model of the environnment is known (e.g. exact tree se
 
 Rl is like **trial-and-error learning**.
 
-**Exploration** finds more information about the environment.
+**Exploration vs Exploitation** :
+* **Exploration** finds more information about the environment.
 
-**Exploitation** exploits known information to maximize rewards.
+* **Exploitation** exploits known information to maximize rewards.
 
-**Prediction** problem : *evaluate the future*, given a policy
-**Control** problem : *optimize the future*, find the best policy
+**Prediction vs Control** :
+
+* **Prediction** problem : *evaluate the future*, given a policy
+
+* **Control** problem : *optimize the future*, find the best 
+policy
