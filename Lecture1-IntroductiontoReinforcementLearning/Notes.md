@@ -26,7 +26,7 @@ In a RL task there is this infinite loop :
 The agent can only control its action.
 
 We define the history as the sequence of observations, actions, rewards of past events. 
-<img src="https://latex.codecogs.com/gif.latex?H_t=A_1, O_1, R_1, ..., A_t, O_t, R_t" title="H_t=A_1, O_1, R_1, ..., A_t, O_t, R_t" />
+<img src="https://latex.codecogs.com/gif.latex?H_t=A_1,O_1,R_1,...,A_t,O_t,R_t" title="H_t=A_1,O_1,R_1,...,A_t,O_t,R_t" />
 
 A state <img src="https://latex.codecogs.com/gif.latex?S_t" /> is **Markov** if and only if  <img src="https://latex.codecogs.com/gif.latex?P[S_{t+1|S_t}]=P[S_{t+1}|S_1,...,S_t]"/>
 If a state is a **Markov state** then it contains all useful information from the history (i.e the history may be thrown away).
@@ -38,7 +38,7 @@ There are 2 types of environment :
 An RL agent must include one or more of these components : 
 * **Policy** <img src="https://latex.codecogs.com/gif.latex?\pi"/>: agent's behaviour function (for *deterministic policy* : <img src="https://latex.codecogs.com/gif.latex?a=\pi(s)"/>, for *stochastic policy* : <img src="https://latex.codecogs.com/gif.latex?\pi(a|s)=P[A=a|S=s]"/>) 
 * **Value function** : how good is each state and/or action. It's a prediction of future *discounted* reward. (<img src="https://latex.codecogs.com/gif.latex?v_\pi(s)=E_\pi[R_t+\gammaR_{t+1}+\gamma^2R_{t+2}+...|S_t=s]"/>)
-* **Model** : agent's representation of the environment, predicts how environment will be updated <img src="https://latex.codecogs.com/gif.latex?P^a_{ss'}=P[S'=s'|S=s, A=a]"/> and the next immediate reward <img src="https://latex.codecogs.com/gif.latex?R_s^a=R[R|S=s, A=a]"/>
+* **Model** : agent's representation of the environment, predicts how environment will be updated <img src="https://latex.codecogs.com/gif.latex?P^a_{ss'}=P[S'=s'|S=s,A=a]"/> and the next immediate reward <img src="https://latex.codecogs.com/gif.latex?R_s^a=R[R|S=s,A=a]"/>
 
 Taxonomy of different types of RL agents, based on what they have : 
 * Value based
