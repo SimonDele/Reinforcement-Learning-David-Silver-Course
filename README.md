@@ -4,4 +4,4 @@ Notes taken while watching David Silver course on Reinforcement Learning (freely
 
 * [Lecture 1 :  Introduction to Reinforcement Learning](./Lecture1-IntroductiontoReinforcementLearning/Notes.md) 
 
-* [Lecture 2 :  Introduction to Reinforcement Learning](./Lecture1-IntroductiontoReinforcementLearning/Notes.md) 
+* [Lecture 2 :  Introduction to Reinforcement Learning](./Lecture2-MDP/Notes.md) 
