@@ -52,7 +52,7 @@ The value function can be decomposed intro 2 parts :
 * immediate reward $R_{t+1}$
 * discounted value of successor state $\gamma v(S_{t+1})$
 
-\begn{align*}
+\begin{align*}
 v(s) =& E[G_t | S_{t} = s]\\
      =& E[ R_{t+1} + \gamma  R_{t+2} + \gamma^2 R_{t+2}+ ... | S_t = s]\\  
      =& E[ R_{t+1} + \gamma G_{t+1} | S_t = s]\\
@@ -61,12 +61,12 @@ v(s) =& E[G_t | S_{t} = s]\\
 \end{align*}
 
 
-Using matrices : $v = R + \gamma P v
+Using matrices : $v = R + \gamma P v$
 <img src='images/bellman_eq.PNG'>
 
 It can be solved directly 
 
-$v = (I - \gamma P)^{-1} R
+$v = (I - \gamma P)^{-1} R$
 
 It's computational complecity is $O(n^3)$ for n states => not feasible for big MRPs.
 
@@ -95,7 +95,7 @@ $\pi(a|s) = P(A_t=a|S_t=s)$
 The **state-value function $v_\pi(s)$** of an MDP is :
 $v_\pi(s) = E_\pi[G_t | S_t = s]$
 
-The **action-value fnction q_\pi(s, a)** is : 
+The **action-value fnction $q_\pi(s, a)$** is : 
 $q_\pi(s, a) = E_\pi[G_t | S_t = s, A_t = a]$
 
 ### Bellman Expectation equation 
