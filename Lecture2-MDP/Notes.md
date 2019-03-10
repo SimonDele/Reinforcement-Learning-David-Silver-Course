@@ -52,16 +52,15 @@ The value function can be decomposed intro 2 parts :
 * immediate reward <img src="/Lecture2-MDP/tex/464207bf81effbe38d5a981f0168b2d2.svg?invert_in_darkmode&sanitize=true" align=middle width=34.09118789999999pt height=22.465723500000017pt/>
 * discounted value of successor state <img src="/Lecture2-MDP/tex/c028cea81301eb3a58f8b5c47e15ddb9.svg?invert_in_darkmode&sanitize=true" align=middle width=63.27865994999999pt height=24.65753399999998pt/>
 
-\begn{align*}
-v(s) =& E[G_t | S_{t} = s]\\
-     =& E[ R_{t+1} + \gamma  R_{t+2} + \gamma^2 R_{t+2}+ ... | S_t = s]\\  
-     =& E[ R_{t+1} + \gamma G_{t+1} | S_t = s]\\
-     =& E[ R_{t+1} + \gamma v(S_{t+1}) | S_t = s]\\
-     =& R_s + \gamma \sum_{s' \in S} P_{ss'}v(s')
-\end{align*}
+<p align="center"><img src="/Lecture2-MDP/tex/91da05f4f1786c5d85786a28818ff1bb.svg?invert_in_darkmode&sanitize=true" align=middle width=323.60547779999996pt height=138.60813285pt/></p>
 
 
-Using matrices : <img src="/Lecture2-MDP/tex/e48c336bf5c17ceab68961fa49fd96e6.svg?invert_in_darkmode&sanitize=true" align=middle width=397.17013545pt height=45.844755pt/>v = (I - \gamma P)^{-1} R
+Using matrices : <img src="/Lecture2-MDP/tex/18760146fb0ed3efb93b2fbc7c271a89.svg?invert_in_darkmode&sanitize=true" align=middle width=93.99362774999999pt height=22.465723500000017pt/>
+<img src='images/bellman_eq.PNG'>
+
+It can be solved directly 
+
+<img src="/Lecture2-MDP/tex/640182df60adce58bb4d8cca4c192adf.svg?invert_in_darkmode&sanitize=true" align=middle width=124.38562619999999pt height=26.76175259999998pt/>
 
 It's computational complecity is <img src="/Lecture2-MDP/tex/90846c243bb784093adbb6d2d0b2b9d0.svg?invert_in_darkmode&sanitize=true" align=middle width=43.02219404999999pt height=26.76175259999998pt/> for n states => not feasible for big MRPs.
 
@@ -90,7 +89,7 @@ A **policy** <img src="/Lecture2-MDP/tex/f30fdded685c83b0e7b446aa9c9aa120.svg?in
 The **state-value function <img src="/Lecture2-MDP/tex/85aed0b0f7b723a72042b5a7378030bf.svg?invert_in_darkmode&sanitize=true" align=middle width=37.38085559999999pt height=24.65753399999998pt/>** of an MDP is :
 <img src="/Lecture2-MDP/tex/07b4a3e453e751dd3ca2da0e046f9627.svg?invert_in_darkmode&sanitize=true" align=middle width=158.25680804999996pt height=24.65753399999998pt/>
 
-The **action-value fnction q_\pi(s, a)** is : 
+The **action-value fnction <img src="/Lecture2-MDP/tex/3580cae5d32bba7f4d60574ab98e99d3.svg?invert_in_darkmode&sanitize=true" align=middle width=52.74613904999998pt height=24.65753399999998pt/>** is : 
 <img src="/Lecture2-MDP/tex/2fa370f6cbfc801dee0809554659e3c9.svg?invert_in_darkmode&sanitize=true" align=middle width=229.65124544999998pt height=24.65753399999998pt/>
 
 ### Bellman Expectation equation 
