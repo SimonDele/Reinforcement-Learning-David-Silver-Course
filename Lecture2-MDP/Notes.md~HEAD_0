@@ -31,4 +31,4 @@ A **Markov process** is a tyle (S, P), where :
 
 ## Markov Reward Process
 
-A markov reward process is a tuple (S, P, R, $\gamma$ )
+A markov reward process is a tuple (S, P, R, <img src="/Lecture2-MDP/tex/11c596de17c342edeed29f489aa4b274.svg?invert_in_darkmode&sanitize=true" align=middle width=9.423880949999988pt height=14.15524440000002pt/> )
