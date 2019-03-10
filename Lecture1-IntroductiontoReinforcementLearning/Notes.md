@@ -1,14 +1,14 @@
-# Introduction to Reinforcement Learning
+# Lecture 1 - Introduction to Reinforcement Learning
 
 [Lecture](https://www.youtube.com/watch?v=2pWv7GOvuf0&list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ), [Slides](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching_files/intro_RL.pdf)
 
-Characteristics of Reinforcement Learning :
+## Characteristics of Reinforcement Learning :
 * No supervisor, only a **reward** signal
 * Feedback is delayed
 * Time really matters (sequential, non i.i.d data)
 * Agent's action affect the subsequent data it receives
 
-Examples of Application : 
+## Examples of Application : 
 * Fly stunt manoeuvres in a helicopter
 * Defeat the world champion at Backgammon
 * Manage an investment portfolio
@@ -16,6 +16,7 @@ Examples of Application :
 * Make a humanoid robot walk
 * Play many different Atari games better than humans
 
+## Objective / Definition 
 
 Objective of an agent is to **maximise cumulative reward**. 
 
@@ -31,7 +32,7 @@ We define the history as the sequence of observations, actions, rewards of past 
 A state <img src="https://latex.codecogs.com/gif.latex?S_t" /> is **Markov** if and only if  <img src="https://latex.codecogs.com/gif.latex?P[S_{t+1|S_t}]=P[S_{t+1}|S_1,...,S_t]"/>
 If a state is a **Markov state** then it contains all useful information from the history (i.e the history may be thrown away).
 
-There are 2 types of environment : 
+## There are 2 types of environment : 
 * **Fully observable environment** (defined by MDP). Agent sees <img src="https://latex.codecogs.com/gif.latex?O_t" /> 
 * **Partially observable environment** (defined by POMDP). Agent must construct its own representation of the environment state (i.e. a kind of environment state prediction based on the part he sees)
 
@@ -40,6 +41,7 @@ An RL agent must include one or more of these components :
 * **Value function** : how good is each state and/or action. It's a prediction of future *discounted* reward. (<img src="https://latex.codecogs.com/gif.latex?v_\pi(s)=E_\pi[R_t+\gammaR_{t+1}+\gamma^2R_{t+2}+...|S_t=s]"/>)
 * **Model** : agent's representation of the environment, predicts how environment will be updated <img src="https://latex.codecogs.com/gif.latex?P^a_{ss'}=P[S'=s'|S=s,A=a]"/> and the next immediate reward <img src="https://latex.codecogs.com/gif.latex?R_s^a=R[R|S=s,A=a]"/>
 
+## Taxonomy
 Taxonomy of different types of RL agents, based on what they have : 
 * Value based
     * No policy (Implicit)
