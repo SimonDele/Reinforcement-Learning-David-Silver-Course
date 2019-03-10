@@ -80,9 +80,8 @@ A **policy** <img src="/Lecture2-MDP/tex/f30fdded685c83b0e7b446aa9c9aa120.svg?in
 
 * A policy fully defines the behaviour of an agent
 * Policies are stationary (time-independent)
-* We have :
-    * $P^\pi_{ss'} = \sum_{a\in A} \pi(a|s) P^a_{ss'}$
-    * $R^\pi_{s} = \sum_{a\in A} \pi(a|s) R^a_{s}$
+* We have : <img src="/Lecture2-MDP/tex/c50fb249eca971ca617ce2a68998487f.svg?invert_in_darkmode&sanitize=true" align=middle width=167.22949649999998pt height=24.657735299999988pt/>
+* And <img src="/Lecture2-MDP/tex/3bbb6bb49ff38008d4d0d91c1aeda1f5.svg?invert_in_darkmode&sanitize=true" align=middle width=153.68117159999997pt height=24.657735299999988pt/>
 
 ### Value function
 
