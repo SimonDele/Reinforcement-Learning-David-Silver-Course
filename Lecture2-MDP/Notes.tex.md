@@ -86,9 +86,8 @@ $\pi(a|s) = P(A_t=a|S_t=s)$
 
 * A policy fully defines the behaviour of an agent
 * Policies are stationary (time-independent)
-* We have :
-    * $P^\pi_{ss'} = \sum_{a\in A} \pi(a|s) P^a_{ss'}$
-    * $R^\pi_{s} = \sum_{a\in A} \pi(a|s) R^a_{s}$
+* We have : $P^\pi_{ss'} = \sum_{a\in A} \pi(a|s) P^a_{ss'}$
+* And $R^\pi_{s} = \sum_{a\in A} \pi(a|s) R^a_{s}$
 
 ### Value function
 
