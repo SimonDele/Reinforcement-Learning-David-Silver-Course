@@ -7,9 +7,7 @@ as explained in the course.
 import gym
 import sys
 import numpy as np
-
 from env_grid_world import GridworldEnv
-
 
 env = GridworldEnv()    
 env._render()
@@ -32,3 +30,4 @@ for i in range(100):
                 sum += action_prob * (reward + gamma * prob * v[next_state]) 
         v[s] = sum   
     print(v.reshape(env.shape))
+print(v)
