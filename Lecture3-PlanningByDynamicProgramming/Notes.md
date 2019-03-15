@@ -33,9 +33,22 @@ At each iteration k+1 :
 
 <img src='images/policy_evaluation.PNG'>
 
-**TODO** GridWorld application
+GridWorld application can be found [[here]](./Applications/policy_evaluation_grid_world.py)
 
 ## Policy Iteration
+
+*How to improve our policy ?*
+
+* Given a policy <img src="/Lecture3-PlanningByDynamicProgramming/tex/f30fdded685c83b0e7b446aa9c9aa120.svg?invert_in_darkmode&sanitize=true" align=middle width=9.96010619999999pt height=14.15524440000002pt/>
+    * Evaluate the policy $\pi$ ($v_\pi(s) = E[R_{t+1} + \gamma T_{t+2} + ... | S_t = s]$)
+    * Improve the policy by acting greedily with respect to $v_\pi$ ($\pi' = greedy(v_\pi)$)
+
+In a small GridWorld env 1 iteration is enough. But in general more iterations is necesary.
+This process always converges to the optimal policy <img src="/Lecture3-PlanningByDynamicProgramming/tex/b1384136386b001cacf877cd93c98628.svg?invert_in_darkmode&sanitize=true" align=middle width=16.69528244999999pt height=22.63846199999998pt/>.
+
+<img src='./images/policy_iteration.PNG'>
+
+**TODO** Car rental exercise
 
 ## Value Iteration
 
