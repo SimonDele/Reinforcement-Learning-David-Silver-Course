@@ -48,10 +48,38 @@ This process always converges to the optimal policy <img src="/Lecture3-Planning
 
 <img src='./images/policy_iteration.PNG'>
 
-**TODO** Car rental exercise
+
+More formally :
+
+* Consider a deterministic policy, <img src="/Lecture3-PlanningByDynamicProgramming/tex/2afd7aaff2306a902c027fe99967b373.svg?invert_in_darkmode&sanitize=true" align=middle width=61.05778469999999pt height=24.65753399999998pt/>
+* We can improve the policy by acting greedily <img src="/Lecture3-PlanningByDynamicProgramming/tex/9e4199c4b51a8dd27b910b2a167d37e7.svg?invert_in_darkmode&sanitize=true" align=middle width=167.23625984999998pt height=29.339719199999994pt/>
+* This imporoves the value from any stat s over one step
+<img src="/Lecture3-PlanningByDynamicProgramming/tex/47b155b28d4ac31a604c2119904f37d6.svg?invert_in_darkmode&sanitize=true" align=middle width=309.5076831pt height=31.1662098pt/>
+
+* It therefore improves the value function, <img src="/Lecture3-PlanningByDynamicProgramming/tex/f486dbe71390d523507a53e6a6967658.svg?invert_in_darkmode&sanitize=true" align=middle width=74.76171285pt height=24.7161288pt/>
+* If improvements stop, q<img src="/Lecture3-PlanningByDynamicProgramming/tex/fec84172ddb21d45e2008a7519ac86b9.svg?invert_in_darkmode&sanitize=true" align=middle width=168.20716439999998pt height=24.7161288pt/>, then the Bellman optimality equation is satisfied. So <img src="/Lecture3-PlanningByDynamicProgramming/tex/f30fdded685c83b0e7b446aa9c9aa120.svg?invert_in_darkmode&sanitize=true" align=middle width=9.96010619999999pt height=14.15524440000002pt/> is an optimal policy.
+
+GridWorld application can be found [[here]](./Applications/policy-iteration_grid_world.py)
 
 ## Value Iteration
 
+Any optimal pollicy can be subdivided into 2 components :
+* an optimal first action
+* followed by an optimal policy from successor state
+
+### Deterministic Value Iteration
+
+* If we know the solution to subproblems <img src="/Lecture3-PlanningByDynamicProgramming/tex/c23e70abc37b4dc4e0ac3e1fdb4f47ea.svg?invert_in_darkmode&sanitize=true" align=middle width=40.627943399999985pt height=24.7161288pt/>
+* Then solution <img src="/Lecture3-PlanningByDynamicProgramming/tex/db5852fb90abf0498e60793cc2f0ecb1.svg?invert_in_darkmode&sanitize=true" align=middle width=36.01606799999999pt height=24.65753399999998pt/> can be found by one-step lookahead, <img src="/Lecture3-PlanningByDynamicProgramming/tex/40ecb00356ef68bdf3e956a0f61b80f9.svg?invert_in_darkmode&sanitize=true" align=middle width=273.45899955pt height=24.7161288pt/>
+* The idea of value iteation is to apply these updates iteratively
+
+To sum up, we have built 3 different *synchronous* algorithms : 
+<img src='images/sum_up_lecture3.png'>
+
 ## Extension to Dynamic Programming 
 
-## Contraction Mapping
+Extension to dynamic programming are :
+*  **Asynchronous* dynamic programming. States are backs up individually. Can reduce computation.
+* In-place dynamic programming
+* Prioritised sweeping, back-up state with the largest remaining Bellman error
+* Real-time dynamic programming, use of agent experience 
