@@ -48,10 +48,38 @@ This process always converges to the optimal policy $\pi^*$.
 
 <img src='./images/policy_iteration.PNG'>
 
-**TODO** Car rental exercise
+
+More formally :
+
+* Consider a deterministic policy, $a = \pi(s)$
+* We can improve the policy by acting greedily $\pi'(s) = \underset{a \in A}{argmax} q_\pi(s,a)$
+* This imporoves the value from any stat s over one step
+$q_\pi(s, \pi'(s)) = \underset{a \in A}{q_\pi(s,a)} \geq q_\pi(s, \pi(s)) = v_\pi(s)$
+
+* It therefore improves the value function, $v_\pi'(s) \qeq v_\pi(s)$
+* If improvements stop, q$_\pi(s, \pi'(s)) = q_\pi(s , \pi(s))$, then the Bellman optimality equation is satisfied. So $\pi$ is an optimal policy.
+
+GridWorld application can be found [[here]](./Applications/policy-iteration_grid_world.py)
 
 ## Value Iteration
 
+Any optimal pollicy can be subdivided into 2 components :
+* an optimal first action
+* followed by an optimal policy from successor state
+
+### Deterministic Value Iteration
+
+* If we know the solution to subproblems $v_*(s')$
+* Then solution $v_*(s)$ can be found by one-step lookahead, $v*(s) \leftarrow \underset{a \in A}{max} R_s^a + \gamma \sum_{s' \in S} P^a_{ss'}v_*(s')$
+* The idea of value iteation is to apply these updates iteratively
+
+To sum up, we have built 3 different *synchronous* algorithms : 
+<img src='images/sum_up_lecture3.png'>
+
 ## Extension to Dynamic Programming 
 
-## Contraction Mapping
+Extension to dynamic programming are :
+*  **Asynchronous* dynamic programming. States are backs up individually. Can reduce computation.
+* In-place dynamic programming
+* Prioritised sweeping, back-up state with the largest remaining Bellman error
+* Real-time dynamic programming, use of agent experience 
