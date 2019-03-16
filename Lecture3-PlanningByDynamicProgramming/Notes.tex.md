@@ -41,8 +41,10 @@ GridWorld application can be found [[here]](./Applications/policy_evaluation_gri
 
 * Given a policy $\pi$
     * Evaluate the policy 
+    
     ($v_\pi(s) = E[R_{t+1} + \gamma T_{t+2} + ... | S_t = s]$)
     * Improve the policy by acting greedily with respect to 
+    
     $v_\pi$ ($\pi' = greedy(v_\pi)$)
 
 In a small GridWorld env 1 iteration is enough. But in general more iterations is necesary.
