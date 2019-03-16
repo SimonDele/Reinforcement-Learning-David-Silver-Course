@@ -40,8 +40,10 @@ GridWorld application can be found [[here]](./Applications/policy_evaluation_gri
 *How to improve our policy ?*
 
 * Given a policy $\pi$
-    * Evaluate the policy $\pi$ ($v_\pi(s) = E[R_{t+1} + \gamma T_{t+2} + ... | S_t = s]$)
-    * Improve the policy by acting greedily with respect to $v_\pi$ ($\pi' = greedy(v_\pi)$)
+    * Evaluate the policy 
+    ($v_\pi(s) = E[R_{t+1} + \gamma T_{t+2} + ... | S_t = s]$)
+    * Improve the policy by acting greedily with respect to 
+    $v_\pi$ ($\pi' = greedy(v_\pi)$)
 
 In a small GridWorld env 1 iteration is enough. But in general more iterations is necesary.
 This process always converges to the optimal policy $\pi^*$.
@@ -76,10 +78,10 @@ Any optimal pollicy can be subdivided into 2 components :
 To sum up, we have built 3 different *synchronous* algorithms : 
 <img src='images/sum_up_lecture3.png'>
 
-## Extension to Dynamic Programming 
+## Extensions to Dynamic Programming 
 
-Extension to dynamic programming are :
-*  **Asynchronous* dynamic programming. States are backs up individually. Can reduce computation.
+Extensions to dynamic programming are :
+*  *Asynchronous* dynamic programming. States are backs up individually. Can reduce computation.
 * In-place dynamic programming
 * Prioritised sweeping, back-up state with the largest remaining Bellman error
 * Real-time dynamic programming, use of agent experience 
