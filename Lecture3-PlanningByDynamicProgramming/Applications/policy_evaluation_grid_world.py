@@ -3,9 +3,6 @@ Implementation of Policy Evaluation on GridWorld environment
 as explained in the course.
 '''
 
-
-import gym
-import sys
 import numpy as np
 from env_grid_world import GridworldEnv
 
