@@ -9,3 +9,5 @@ Notes taken while watching David Silver course on Reinforcement Learning (freely
 * [Lecture 3 : Planning by Dynamic Programming](./Lecture3-PlanningByDynamicProgramming/Notes.md) 
 
 * [Lecture 4 : Model-Free prediction](./Lecture4-Model-Free-Prediction/Notes.md) 
+
+* [Lecture 5 : Model-Free Control](./Lecture5-Model-Free-Control/Notes.md) 
