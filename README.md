@@ -7,3 +7,5 @@ Notes taken while watching David Silver course on Reinforcement Learning (freely
 * [Lecture 2 : Markov Decision Process](./Lecture2-MDP/Notes.md) 
 
 * [Lecture 3 : Planning by Dynamic Programming](./Lecture3-PlanningByDynamicProgramming/Notes.md) 
+
+* [Lecture 4 : Model-Free prediction](./Lecture4-Model-Free Prediction/Notes.md) 
