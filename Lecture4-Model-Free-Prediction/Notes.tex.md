@@ -68,74 +68,10 @@ TD learns from **incomplete episodes** by *boostrapping*
 TD is model-free, learn directly from experience
 
 
+In *Incremental every-visit MC* we had : 
+    $V(S_t) \leftarrow V(S_t) + \alpha ( \textcolor{red}{G_t} - V(S_t))$ 
+which means that we move a litte bit in the direction given by the current error.
 
-
-
-
-
-$ R_{t+1} + \gamma V(S_{t+1})$ is called the *TD target*
-
-$\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)$ is called the *TD error*
-
-<img src='./images/diff_MC-TD.png'>
-
-TD can learn *before* knowing the final outcome, MC can't. 
-
-### Bias/Variance Trade-Off
-Return $G_t = R_{t+1} + \gamma ...$ is unbiased estimate of $v\pi(S_t)$
-TD target $R_{t+1} + \gamma V(S_{t+1})$ is biased estimate of $v_\pi(S_t)$ but lower variance because return is full of noise (random actions, transition, rewards)
-
-TD exploits Markov property and is then more efficient in Markov environments. In other case, MC is more efficient.
-
-
-### Unified View - Backups
-
-**Monte-Carlo** backup  
-
-<img src='images/mc_backup.png'>
-
-**TD** backup
-
-<img src='images/td_backup.png'>
-
-**Dynamic programming** backup
-
-<img src='images/dp_backup.png'>
-
-### Bootstrapping and Sampling
-
-**Boostrapping** use your estimate of the return
-* MC does not bootstrap
-* DP bootstraps
-* TD bootstraps
-
-**Sampling** update samples an expectation
-* MC samples
-* DP does not sample
-* TD samples
-
-<img src='images/unified_view.png'>
-
-
-## TD($\lambda$)
-
-TD(0) = look 1 step into the future ($G_t = R_{t+1} + \gamma V(S_{t+1})$)
-
-TD(1) = look 2 steps ino the future ($G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 V(S_{t+2})$)
-
-
-TD(n) = ...
-
-TD($\infty$) = Monte-Carlo
-
-TD($\lambda$) : averaging (with weight $(1-\lambda)\lambda^{n-1}$) the return of all time-steps. G_t^\lambda = (1-\lambda) \sum_{n=1}^\infty \lambda^{n-1} G_t^{(n)}$ where $G_t^{(n)}$ is the return of TD(n).
-
-
-
-
-
-
-
-
-
+In TD(0) we use the same idea but we leverage the Bellman equation to learn from incomplete sequence : 
+$V(S_t) \leftarrow V(S_t) + \alpha ( \textcolor{red}{R_{t+1} + \gamma V(S_{t+1})} - V(S_t))$
 
