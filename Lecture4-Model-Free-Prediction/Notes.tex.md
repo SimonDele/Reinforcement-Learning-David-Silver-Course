@@ -14,6 +14,7 @@ MC is a model-free : no knowledge of MDP transitions/rewards
 
 **Goal** learn $v_\pi$ from episodes of experience under policy $\pi$. ($S_1,A_1,R_2,...,S_k ~ \pi)$
 
+
 Recall :
 * *return* G is the total discounted reward
 
@@ -53,9 +54,9 @@ Every time-step t that state s is visited in an episode
 ### Incremental Monte-Carlo updates
 
 Use the formula of the *incremental mean* :
-$\mu_{k+1} = \mu_k + \frac{1}{k+1} (x_k -\mu_k) $. Which gives :
+$\mu_{k+1} = \mu_k + 1/k+1 (x_k -\mu_k) $. Which gives :
 * $N(S_t) \leftarrow N(S_t) + 1$
-* $V(S_t) \leftarrow V(S_t) + \frac{1}{N(S_t))(G_t - V(S_t))$
+* $V(S_t) \leftarrow V(S_t) + 1/N(S_t)(G_t - V(S_t)$
 
 In non-stationary problems, it can be useful to track a running mean (i.e to forget old episodes) : 
 $ V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))$
@@ -66,12 +67,17 @@ $ V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))$
 TD learns from **incomplete episodes** by *boostrapping*
 TD is model-free, learn directly from experience
 
+
 In *Incremental every-visit MC* we had : 
-    $V(S_t) \leftarrow V(S_t) + \alpha ( \textcolor{red}{G_t} - V(S_t))$ 
+    $V(S_t) \leftarrow V(S_t) + \alpha (G_t - V(S_t))$ 
 which means that we move a litte bit in the direction given by the current error.
 
 In TD(0) we use the same idea but we leverage the Bellman equation to learn from incomplete sequence : 
-$V(S_t) \leftarrow V(S_t) + \alpha ( \textcolor{red}{R_{t+1} + \gamma V(S_{t+1})} - V(S_t))$
+$V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))$
+
+
+
+
 
 $ R_{t+1} + \gamma V(S_{t+1})$ is called the *TD target*
 
@@ -128,9 +134,5 @@ TD(n) = ...
 
 TD($\infty$) = Monte-Carlo
 
-TD($\lambda$) : averaging (with weight $(1-\lambda)\lambda^{n-1}$) the return of all time-steps. G_t^\lambda = (1-\lambda) \sum_{n=1}^\infty \lambda^{n-1} G_t^{(n)}$ where $G_t^{(n)}$ is the return of TD(n).
-
-
-
-
+TD($\lambda$) : averaging (with weight $(1-\lambda)\lambda^{n-1}$) the return of all time-steps. $G_t^\lambda = (1-\lambda) \sum_{n=1}^\infty \lambda^{n-1} G_t^{(n)}$ where $G_t^{(n)}$ is the return of TD(n).
 
