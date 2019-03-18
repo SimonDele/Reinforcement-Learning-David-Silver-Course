@@ -108,7 +108,7 @@ Forward view : <img src="/Lecture5-Model-Free-Control/tex/d6a2ee3fb7a3e994c56ed8
 
 Use **eligibility traces** in an online algorithm
 
-Sarsa(<img src="/Lecture5-Model-Free-Control/tex/549efbfaedf0e423a31a6220b72893dc.svg?invert_in_darkmode&sanitize=true" align=middle width=8.21920935pt height=14.15524440000002pt/>) has one eligibiliy trace for each state-action pair
+Sarsa(<img src="/Lecture5-Model-Free-Control/tex/fd8be73b54f5436a5cd2e73ba9b6bfa9.svg?invert_in_darkmode&sanitize=true" align=middle width=9.58908224999999pt height=22.831056599999986pt/>) has one eligibiliy trace for each state-action pair
 * <img src="/Lecture5-Model-Free-Control/tex/13ad418c2658711e2b9593b375d69c31.svg?invert_in_darkmode&sanitize=true" align=middle width=86.13196844999999pt height=24.65753399999998pt/>
 * <img src="/Lecture5-Model-Free-Control/tex/b3719d2213508a018cc248e52fb3f3bb.svg?invert_in_darkmode&sanitize=true" align=middle width=299.89721354999995pt height=24.65753399999998pt/>
 
@@ -116,7 +116,15 @@ Sarsa(<img src="/Lecture5-Model-Free-Control/tex/549efbfaedf0e423a31a6220b72893d
 
 In proportion to the TD-error <img src="/Lecture5-Model-Free-Control/tex/10ea9eec57d7dd8109d5e58e9baf6620.svg?invert_in_darkmode&sanitize=true" align=middle width=12.27173144999999pt height=22.831056599999986pt/> and eligibility trace <img src="/Lecture5-Model-Free-Control/tex/1976738d6b55a6d7419b48a6fa9df6f8.svg?invert_in_darkmode&sanitize=true" align=middle width=54.408357299999984pt height=24.65753399999998pt/>
 * <img src="/Lecture5-Model-Free-Control/tex/160f49a95dbb6a5d198ab10410d7f458.svg?invert_in_darkmode&sanitize=true" align=middle width=286.96007834999995pt height=24.65753399999998pt/>
-* Q(s, a) \leftarrow Q(s, a) + \alpha \delta_t E_t(s,a)<img src="/Lecture5-Model-Free-Control/tex/6e99c396e650f952b8dd5803d2919907.svg?invert_in_darkmode&sanitize=true" align=middle width=368.20713435pt height=164.20092149999996pt/>\pi(a|s) to compute <img src="/Lecture5-Model-Free-Control/tex/85aed0b0f7b723a72042b5a7378030bf.svg?invert_in_darkmode&sanitize=true" align=middle width=37.38085559999999pt height=24.65753399999998pt/> or <img src="/Lecture5-Model-Free-Control/tex/f4fd307c043a8d1ae7d10dec8715ec8f.svg?invert_in_darkmode&sanitize=true" align=middle width=52.74613904999998pt height=24.65753399999998pt/>
+* <img src="/Lecture5-Model-Free-Control/tex/e429c3bb8222fa74943a20dd276a8c76.svg?invert_in_darkmode&sanitize=true" align=middle width=222.70302284999994pt height=24.65753399999998pt/>
+
+To sum up, the final algorithm is : 
+
+<img src='./images/backward-sarsa_lambda.PNG'>
+
+## Off-Policy Learning
+
+Evaluate **target policy** <img src="/Lecture5-Model-Free-Control/tex/a5f75f5c24cae21447686b47e4f99d38.svg?invert_in_darkmode&sanitize=true" align=middle width=43.70637809999999pt height=24.65753399999998pt/> to compute <img src="/Lecture5-Model-Free-Control/tex/85aed0b0f7b723a72042b5a7378030bf.svg?invert_in_darkmode&sanitize=true" align=middle width=37.38085559999999pt height=24.65753399999998pt/> or <img src="/Lecture5-Model-Free-Control/tex/f4fd307c043a8d1ae7d10dec8715ec8f.svg?invert_in_darkmode&sanitize=true" align=middle width=52.74613904999998pt height=24.65753399999998pt/>
 
 While **following behaviour** policy <img src="/Lecture5-Model-Free-Control/tex/44466e9be069ee87b299d635e626d0f5.svg?invert_in_darkmode&sanitize=true" align=middle width=43.65121529999999pt height=24.65753399999998pt/>
 
@@ -142,7 +150,7 @@ Interest :
 * But we consider alternantive succesor action <img src="/Lecture5-Model-Free-Control/tex/c8b479b680cfff8c8768d2dc451a2325.svg?invert_in_darkmode&sanitize=true" align=middle width=86.60388659999998pt height=24.7161288pt/>
 * And update <img src="/Lecture5-Model-Free-Control/tex/bd388eab74bded5ef1295c4b6abbacf5.svg?invert_in_darkmode&sanitize=true" align=middle width=67.07084009999998pt height=24.65753399999998pt/> towards value of alternative action
 
-$Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (R_{t+1} + \gamma Q(S_{t+1} , A') - Q(S_t, A_t))
+<img src="/Lecture5-Model-Free-Control/tex/2a3ada3cdd4ba0a1d8d8b3a9d4a2effc.svg?invert_in_darkmode&sanitize=true" align=middle width=437.29450049999997pt height=24.7161288pt/>
 
 ### Off-policy Control with Q-learning 
 
