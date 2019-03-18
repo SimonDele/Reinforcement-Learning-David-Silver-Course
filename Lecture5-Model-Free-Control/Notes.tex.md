@@ -154,7 +154,7 @@ $Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (R_{t+1} + \gamma Q(S_{t+1} , A') -
 
 ### Off-policy Control with Q-learning 
 
-<img src='image/q-learning.PNG'>
+<img src='images/q_learning.PNG'>
 
 <img src='images/q_learning_algo.PNG'>
 
