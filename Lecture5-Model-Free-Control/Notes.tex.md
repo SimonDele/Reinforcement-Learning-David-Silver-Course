@@ -108,7 +108,7 @@ Forward view : $Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (q_t^\lambda - Q(S_t
 
 Use **eligibility traces** in an online algorithm
 
-Sarsa($\labmda$) has one eligibiliy trace for each state-action pair
+Sarsa($\lambda$) has one eligibiliy trace for each state-action pair
 * $E_0(s,a) = 0$
 * $E_t(s, a) = \gamma \labmda E_{t-1} (s,a) + I(S_t = s, A_t = a)$
 
@@ -116,7 +116,7 @@ $Q(s, a)$ is updated for every state and action
 
 In proportion to the TD-error $\delta_t$ and eligibility trace $E_t(s,a)$
 * $\delta_t = R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)$
-* Q(s, a) \leftarrow Q(s, a) + \alpha \delta_t E_t(s,a)$
+* $Q(s, a) \leftarrow Q(s, a) + \alpha \delta_t E_t(s,a)$
 
 To sum up, the final algorithm is : 
 
@@ -124,7 +124,7 @@ To sum up, the final algorithm is :
 
 ## Off-Policy Learning
 
-Evaluate **target policy** $\pi(a|s) to compute $v_\pi(s)$ or $q_\pi(s,a)$
+Evaluate **target policy** $\pi(a|s)$ to compute $v_\pi(s)$ or $q_\pi(s,a)$
 
 While **following behaviour** policy $\mu(s|a)$
 
@@ -150,7 +150,7 @@ Interest :
 * But we consider alternantive succesor action $A' \sim \pi(. | S_t)$
 * And update $Q(S_t, A_t)$ towards value of alternative action
 
-$Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (R_{t+1} + \gamma Q(S_{t+1} , A') - Q(S_t, A_t))
+$Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (R_{t+1} + \gamma Q(S_{t+1} , A') - Q(S_t, A_t))$
 
 ### Off-policy Control with Q-learning 
 
