@@ -154,7 +154,7 @@ Interest :
 
 ### Off-policy Control with Q-learning 
 
-<img src='image/q-learning.PNG'>
+<img src='images/q_learning.PNG'>
 
 <img src='images/q_learning_algo.PNG'>
 
