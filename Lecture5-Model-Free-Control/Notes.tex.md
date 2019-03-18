@@ -33,7 +33,7 @@ With model-free methods we need to introduce an exploratory strategy in order to
 
 ### Theorem
 
-For any $\epsilon$-greedy policy $\pi$, the $\epsilon$-greedy policy $\pi'$ with respect to $\q_\pi$ is an improvement, i.e $v_\pi'(s) > v_\pi(s)
+For any $\epsilon$-greedy policy $\pi$, the $\epsilon$-greedy policy $\pi'$ with respect to $\q_\pi$ is an improvement, i.e $v_\pi'(s) > v_\pi(s)$
 
 Can be proven in a few lines...
 
