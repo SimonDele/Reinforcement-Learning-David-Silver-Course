@@ -66,10 +66,6 @@ Every episode :
 <img src="/Lecture5-Model-Free-Control/tex/ca1c0ff853b51e94520537ec36c72b62.svg?invert_in_darkmode&sanitize=true" align=middle width=136.89188699999997pt height=24.65753399999998pt/>
 
 
-**TODO** application on Black-jack
-
-
-
 
 ## On-Policy Temporal-Difference Learning
 
@@ -91,6 +87,8 @@ SARSA converges to the optimal action-value function, under the following condit
 <img src="/Lecture5-Model-Free-Control/tex/b8cf98c8672631ad01fa9d572f328eed.svg?invert_in_darkmode&sanitize=true" align=middle width=78.13928429999999pt height=26.438629799999987pt/>
 <img src="/Lecture5-Model-Free-Control/tex/832a8d852fd51f9779ee17e36d47890a.svg?invert_in_darkmode&sanitize=true" align=middle width=78.13928429999999pt height=26.438629799999987pt/>
 
+
+**APPLICATIONS** on windy world [[here]](./Applications/SARSA-Windy_Grid_World.ipynb)
 
 ### n-step Sarsa
 
