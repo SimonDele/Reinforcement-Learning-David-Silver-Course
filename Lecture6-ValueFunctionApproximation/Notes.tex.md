@@ -2,7 +2,7 @@
 
 [Lecture](https://www.youtube.com/watch?v=UoPei5o4fps&index=6&list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ), [Slides](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching_files/FA.pdf)
 
-**Applications** :  Linear function approximation [[here]](./applications/mountain_car_linear_func_approx.py)
+**Applications** :  Linear function approximation [[here]](./applications/linear_value_func_approx_mountain_car.ipynb)
 
 
 ## Introduction
