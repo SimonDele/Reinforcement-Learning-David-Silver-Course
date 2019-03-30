@@ -1,5 +1,8 @@
 # Lecture 5 : Model-Free Control
 
+[Lecture](https://www.youtube.com/watch?v=0g4j2k_Ggc4&list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ&index=5), [Slides](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching_files/control.pdf)
+
+
 ## Introduction
 
 Find the best policy without knowing the MDP that rules the world.

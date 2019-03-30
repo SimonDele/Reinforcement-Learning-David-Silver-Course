@@ -11,3 +11,5 @@ Notes taken while watching David Silver course on Reinforcement Learning (freely
 * [Lecture 4 : Model-Free prediction](./Lecture4-Model-Free-Prediction/Notes.md) 
 
 * [Lecture 5 : Model-Free Control](./Lecture5-Model-Free-Control/Notes.md) 
+
+* [Lecture 6 : Value Function Approximation](./Lecture6-ValueFunctionApproximation/Notes.md) 
