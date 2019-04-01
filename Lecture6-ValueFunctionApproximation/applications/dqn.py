@@ -1,4 +1,6 @@
 import gym
+from gym.wrappers import Monitor
+
 import matplotlib.pyplot as plt
 import numpy as np
 import random
@@ -21,12 +23,6 @@ import time
 from easy_tf_log import tflog
 
 
-env = gym.envs.make('Breakout-v0')
-
-obs = env.reset()
-
-
-nA = env.action_space.n
 
 def updateTargetModel(model, targetModel):
   modelWeights       = model.trainable_weights
@@ -75,6 +71,8 @@ def make_epsilon_greedy_policy(estimator, nA):
 
 
 
+
+
 q_estimator = build_model((84,84,4),nA)
 target_estimator = build_model((84,84,4),nA)
 
@@ -89,16 +87,25 @@ epsilon_start = 1.0
 epsilon_end = 0.1
 batch_size = 32
 epsilon_decay_steps = 500000
-replay_memory_init_size = 10000
-replay_memory_size = 20000
+replay_memory_init_size = 20000
+replay_memory_size = 40000
 update_target_weights_every = 10000
 discount_factor = 0.99
+
+record_video_every = 2000
+
 ### Initialisation
+
+monitor_path = os.path.abspath("./monitor/")
+nA = env.action_space.n
+env = gym.envs.make('Breakout-v0')
+env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % record_video_every == 0, resume=True)
+obs = env.reset()
 t_steps = 0
 replay_memory = []
 nA = env.action_space.n
 ts = time.gmtime()
-time_readable = time.strftime("%Y-%m-%d %H:%M:%S", ts))
+time_readable = time.strftime("%Y-%m-%d %H:%M:%S", ts)
 log_dir = os.path.join('./logs/' + time_readable)
 tbCallBack = callbacks.TensorBoard(log_dir=log_dir, histogram_freq=0,  
           write_graph=True, write_images=True)
