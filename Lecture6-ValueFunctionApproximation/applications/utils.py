@@ -3,6 +3,7 @@ from skimage.util import crop
 from skimage.transform import resize
 from scipy import misc
 
+import numpy as np
 
 def preprocessed_img(img):
     #plt.imshow(img)
@@ -19,7 +20,7 @@ def preprocessed_img(img):
     return rescaled
 
 
-def preprocessed_img_pong(img):
+def preprocessed_img_pong(observation):
     """Transforms the specified observation into a 47x47x1 grayscale image.
     Returns:
         A 47x47x1 tensor with float32 values between 0 and 1.
@@ -33,4 +34,4 @@ def preprocessed_img_pong(img):
     # Resize grayscale frame to a 47x47 matrix of 32-bit floats.
     resized_observation = misc.imresize(grayscale_observation, (47, 47)).astype(np.float32)
 
-    return np.expand_dims(resized_observation, 2)
+    return resized_observation

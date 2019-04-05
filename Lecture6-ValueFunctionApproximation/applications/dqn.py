@@ -13,7 +13,7 @@ from keras.layers import Conv2D, Flatten, Dense
 from keras import callbacks
 from keras.optimizers import Adam
 
-from utils import preprocessed_img
+from utils import preprocessed_img, preprocessed_img_pong 
 
 import itertools
 import sys, os
@@ -44,7 +44,7 @@ def build_model(input_shape, nA):
 
     model.summary()
     optimizer = Adam(lr=0.00001)
-    model.compile(optimizer='adam', loss='mse')
+    model.compile(optimizer=optimizer, loss='mse')
 
     return model
 
@@ -72,13 +72,6 @@ def make_epsilon_greedy_policy(estimator, nA):
         return A
     return policy_fn
 
-<<<<<<< HEAD
-=======
-q_estimator = build_model((84,84,4),nA)
-target_estimator = build_model((84,84,4),nA)
-
-
->>>>>>> 7cd1cc0bd12dd536e09c030056716796c4dd6f14
 
 #def train():
 
@@ -98,21 +91,17 @@ record_video_every = 50
 
 ### Initialisation
 
-<<<<<<< HEAD
-env = gym.envs.make('Breakout-v0')
-=======
 monitor_path = os.path.abspath("./monitor/")
-nA = env.action_space.n
 env = gym.envs.make('Pong-v0')
+nA = env.action_space.n
 env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % record_video_every == 0, resume=True)
->>>>>>> 7cd1cc0bd12dd536e09c030056716796c4dd6f14
 obs = env.reset()
 #env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % record_video_every == 0, resume=True)
 
 nA = env.action_space.n
 print("Action Space :" + str(nA))
-q_estimator = build_model((84,84,4),nA)
-target_estimator = build_model((84,84,4),nA)
+q_estimator = build_model((47,47,4),nA)
+target_estimator = build_model((47,47,4),nA)
 
 t_steps = 0
 replay_memory = []
@@ -129,11 +118,7 @@ epsilons = np.linspace(epsilon_start, epsilon_end, epsilon_decay_steps)
 monitor_path = os.path.abspath("./monitor/" + time_readable + "/")
 
 #### Init replay memory
-<<<<<<< HEAD
-obs = preprocessed_img(obs)
-=======
 obs = preprocessed_img_pong(env.reset())
->>>>>>> 7cd1cc0bd12dd536e09c030056716796c4dd6f14
 obs = np.stack([obs] * 4, axis=2) # one_input = 4 * obs
 
 for _ in tqdm(range(replay_memory_init_size)):
@@ -147,7 +132,7 @@ for _ in tqdm(range(replay_memory_init_size)):
     replay_memory.append((obs, action, reward, new_obs, done))
 
     if done:
-        obs = preprocessed_img(env.reset())
+        obs = preprocessed_img_pong(env.reset())
         obs = np.stack([obs] * 4, axis=2) # one_input = 4 * obs
     else: 
         obs = new_obs
@@ -181,10 +166,6 @@ for n_episode in range(max_episodes):
         # Sample action
         action_probs = policy(obs, epsilon)
         action = np.random.choice(np.arange(len(action_probs)), p=action_probs)
-<<<<<<< HEAD
-
-=======
->>>>>>> 7cd1cc0bd12dd536e09c030056716796c4dd6f14
         # Environment step
         new_obs, reward, done, _ = env.step(action)
         new_obs = preprocessed_img_pong(new_obs)
@@ -210,17 +191,9 @@ for n_episode in range(max_episodes):
 
         # Update estimator weights
         target_f = q_estimator.predict(states_batch)
-<<<<<<< HEAD
-
-        #target_f[:,action_batch] = targets
-=======
         
         for i, action, target in enumerate(action_batch, targets_f):
             target_f[i,action] = target
->>>>>>> 7cd1cc0bd12dd536e09c030056716796c4dd6f14
-    
-        for i, action in enumerate(action_batch):
-            target_f[i,action] = targets[i]
 
         loss = q_estimator.train_on_batch(states_batch, target_f)
         
