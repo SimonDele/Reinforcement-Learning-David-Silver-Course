@@ -69,10 +69,6 @@ def make_epsilon_greedy_policy(estimator, nA):
         return A
     return policy_fn
 
-
-
-
-
 q_estimator = build_model((84,84,4),nA)
 target_estimator = build_model((84,84,4),nA)
 
@@ -86,7 +82,7 @@ max_episodes = 2000
 epsilon_start = 1.0
 epsilon_end = 0.1
 batch_size = 32
-epsilon_decay_steps = 500000
+epsilon_decay_steps = 50000
 replay_memory_init_size = 20000
 replay_memory_size = 40000
 update_target_weights_every = 10000
@@ -98,7 +94,7 @@ record_video_every = 2000
 
 monitor_path = os.path.abspath("./monitor/")
 nA = env.action_space.n
-env = gym.envs.make('Breakout-v0')
+env = gym.envs.make('Pong-v0')
 env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % record_video_every == 0, resume=True)
 obs = env.reset()
 t_steps = 0
@@ -115,7 +111,7 @@ policy = make_epsilon_greedy_policy(q_estimator, nA)
 epsilons = np.linspace(epsilon_start, epsilon_end, epsilon_decay_steps)
 
 #### Init replay memory
-obs = preprocessed_img(env.reset())
+obs = preprocessed_img_pong(env.reset())
 obs = np.stack([obs] * 4, axis=2) # one_input = 4 * obs
 
 for _ in tqdm(range(replay_memory_init_size)):
@@ -123,7 +119,7 @@ for _ in tqdm(range(replay_memory_init_size)):
     action = np.random.choice(np.arange(len(action_probs)), p=action_probs)
 
     new_obs, reward, done, _ = env.step(action)
-    new_obs = preprocessed_img(new_obs)
+    new_obs = preprocessed_img_pong(new_obs)
     new_obs = np.append(obs[:,:,1:], np.expand_dims(new_obs, 2), axis=2)
     
     replay_memory.append((obs, action, reward, new_obs, done))
@@ -160,10 +156,10 @@ for n_episode in range(max_episodes):
         
         # Sample action
         action_probs = policy(obs, epsilon)
-
+        action = np.random.choice(np.arange(len(action_probs)), p=action_probs)
         # Environment step
         new_obs, reward, done, _ = env.step(action)
-        new_obs = preprocessed_img(new_obs)
+        new_obs = preprocessed_img_pong(new_obs)
         new_obs = np.append(obs[:,:,1:], np.expand_dims(new_obs, axis=2), axis=2)
 
         if len(replay_memory) >= replay_memory_size:
@@ -185,8 +181,9 @@ for n_episode in range(max_episodes):
 
         # Update estimator weights
         target_f = q_estimator.predict(states_batch)
-
-        target_f[:,action_batch] = targets
+        
+        for i, action, target in enumerate(action_batch, targets_f):
+            target_f[i,action] = target
     
         loss = q_estimator.train_on_batch(states_batch, target_f)
         
