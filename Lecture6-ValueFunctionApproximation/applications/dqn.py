@@ -11,6 +11,7 @@ import keras
 from keras.models import Sequential
 from keras.layers import Conv2D, Flatten, Dense
 from keras import callbacks
+from keras.optimizers import Adam
 
 from utils import preprocessed_img
 
@@ -22,14 +23,15 @@ import time
 
 from easy_tf_log import tflog
 
+def updateTargetModel(model, target_model):
+    weights = model.get_weights()
+    target_weights = target_model.get_weights()
+    for i in range(len(target_weights)):
+        target_weights[i] = weights[i]
+    target_model.set_weights(target_weights)
 
-
-def updateTargetModel(model, targetModel):
-  modelWeights       = model.trainable_weights
-  targetModelWeights = targetModel.trainable_weights
-
-  for i in range(len(targetModelWeights)):
-    targetModelWeights[i].assign(modelWeights[i])
+def huber_loss(y_true, y_pred):
+    return tf.losses.huber_loss(y_true,y_pred)
 
 def build_model(input_shape, nA):
     model = Sequential()
@@ -37,10 +39,11 @@ def build_model(input_shape, nA):
     model.add(Conv2D(filters=64, kernel_size=4, strides=2, activation='relu'))
     model.add(Conv2D(filters=64, kernel_size=3, strides=1, activation='relu'))
     model.add(Flatten())
-    model.add(Dense(256))
+    model.add(Dense(256, activation='relu'))
     model.add(Dense(nA))
 
     model.summary()
+    optimizer = Adam(lr=0.00001)
     model.compile(optimizer='adam', loss='mse')
 
     return model
@@ -70,37 +73,33 @@ def make_epsilon_greedy_policy(estimator, nA):
     return policy_fn
 
 
-
-
-
-q_estimator = build_model((84,84,4),nA)
-target_estimator = build_model((84,84,4),nA)
-
-
-
 #def train():
 
 
 ### Hyperparameter
-max_episodes = 2000
+max_episodes = 10000
 epsilon_start = 1.0
 epsilon_end = 0.1
 batch_size = 32
 epsilon_decay_steps = 500000
 replay_memory_init_size = 20000
-replay_memory_size = 40000
+replay_memory_size = 30000
 update_target_weights_every = 10000
 discount_factor = 0.99
 
-record_video_every = 2000
+record_video_every = 50
 
 ### Initialisation
 
-monitor_path = os.path.abspath("./monitor/")
-nA = env.action_space.n
 env = gym.envs.make('Breakout-v0')
-env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % record_video_every == 0, resume=True)
 obs = env.reset()
+#env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % record_video_every == 0, resume=True)
+
+nA = env.action_space.n
+print("Action Space :" + str(nA))
+q_estimator = build_model((84,84,4),nA)
+target_estimator = build_model((84,84,4),nA)
+
 t_steps = 0
 replay_memory = []
 nA = env.action_space.n
@@ -113,9 +112,10 @@ tbCallBack = callbacks.TensorBoard(log_dir=log_dir, histogram_freq=0,
 policy = make_epsilon_greedy_policy(q_estimator, nA)
 # epsilon decay
 epsilons = np.linspace(epsilon_start, epsilon_end, epsilon_decay_steps)
+monitor_path = os.path.abspath("./monitor/" + time_readable + "/")
 
 #### Init replay memory
-obs = preprocessed_img(env.reset())
+obs = preprocessed_img(obs)
 obs = np.stack([obs] * 4, axis=2) # one_input = 4 * obs
 
 for _ in tqdm(range(replay_memory_init_size)):
@@ -133,6 +133,8 @@ for _ in tqdm(range(replay_memory_init_size)):
         obs = np.stack([obs] * 4, axis=2) # one_input = 4 * obs
     else: 
         obs = new_obs
+
+env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % record_video_every == 0, resume=True)
 
 
 ### Training Loop
@@ -160,6 +162,7 @@ for n_episode in range(max_episodes):
         
         # Sample action
         action_probs = policy(obs, epsilon)
+        action = np.random.choice(np.arange(len(action_probs)), p=action_probs)
 
         # Environment step
         new_obs, reward, done, _ = env.step(action)
@@ -180,14 +183,18 @@ for n_episode in range(max_episodes):
         states_batch, action_batch, reward_batch, next_states_batch, done_batch = map(np.array, zip(*samples))        
 
         # Compute target
+        #q_values_next = target_estimator.predict(next_states_batch)
         q_values_next = target_estimator.predict(next_states_batch)
-        targets = reward_batch + np.invert(done_batch).astype(np.float32) * discount_factor * np.amax(q_values_next, axis=1)
+        targets = reward_batch + (1-done_batch) * discount_factor * np.amax(q_values_next, axis=1)
 
         # Update estimator weights
         target_f = q_estimator.predict(states_batch)
 
-        target_f[:,action_batch] = targets
+        #target_f[:,action_batch] = targets
     
+        for i, action in enumerate(action_batch):
+            target_f[i,action] = targets[i]
+
         loss = q_estimator.train_on_batch(states_batch, target_f)
         
         eps_loss += loss
