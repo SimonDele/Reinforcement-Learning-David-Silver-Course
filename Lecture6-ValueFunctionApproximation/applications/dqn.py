@@ -82,8 +82,8 @@ epsilon_start = 1.0
 epsilon_end = 0.1
 batch_size = 32
 epsilon_decay_steps = 50000
-replay_memory_init_size = 20000
-replay_memory_size = 30000
+replay_memory_init_size = 10000
+replay_memory_size = 20000
 update_target_weights_every = 10000
 discount_factor = 0.99
 
@@ -93,19 +93,15 @@ record_video_every = 50
 
 monitor_path = os.path.abspath("./monitor/")
 env = gym.envs.make('Pong-v0')
-nA = env.action_space.n
-env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % record_video_every == 0, resume=True)
+nA = env.action_space.n - 3 
 obs = env.reset()
-#env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % record_video_every == 0, resume=True)
-
-nA = env.action_space.n
 print("Action Space :" + str(nA))
 q_estimator = build_model((47,47,4),nA)
 target_estimator = build_model((47,47,4),nA)
 
 t_steps = 0
 replay_memory = []
-nA = env.action_space.n
+
 ts = time.gmtime()
 time_readable = time.strftime("%Y-%m-%d %H:%M:%S", ts)
 log_dir = os.path.join('./logs/' + time_readable)
@@ -125,7 +121,7 @@ for _ in tqdm(range(replay_memory_init_size)):
     action_probs = policy(obs, epsilon_start)
     action = np.random.choice(np.arange(len(action_probs)), p=action_probs)
 
-    new_obs, reward, done, _ = env.step(action)
+    new_obs, reward, done, _ = env.step(action + 1)
     new_obs = preprocessed_img_pong(new_obs)
     new_obs = np.append(obs[:,:,1:], np.expand_dims(new_obs, 2), axis=2)
     
@@ -144,7 +140,7 @@ env = Monitor(env, directory=monitor_path, video_callable=lambda count: count % 
 for n_episode in range(max_episodes):
 
     obs = env.reset()
-    obs = preprocessed_img(obs)
+    obs = preprocessed_img_pong(obs)
     obs = np.stack([obs]*4, axis=2)
     eps_length = 0
     eps_reward = 0
@@ -167,7 +163,7 @@ for n_episode in range(max_episodes):
         action_probs = policy(obs, epsilon)
         action = np.random.choice(np.arange(len(action_probs)), p=action_probs)
         # Environment step
-        new_obs, reward, done, _ = env.step(action)
+        new_obs, reward, done, _ = env.step(action + 1)
         new_obs = preprocessed_img_pong(new_obs)
         new_obs = np.append(obs[:,:,1:], np.expand_dims(new_obs, axis=2), axis=2)
 
@@ -192,8 +188,8 @@ for n_episode in range(max_episodes):
         # Update estimator weights
         target_f = q_estimator.predict(states_batch)
         
-        for i, action, target in enumerate(action_batch, targets_f):
-            target_f[i,action] = target
+        for i, action in enumerate(action_batch):
+            target_f[i,action] = targets[i]
 
         loss = q_estimator.train_on_batch(states_batch, target_f)
         
