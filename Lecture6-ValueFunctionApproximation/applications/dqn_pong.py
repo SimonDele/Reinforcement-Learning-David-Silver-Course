@@ -19,7 +19,7 @@ import itertools
 import sys, os
 from tqdm import tqdm
 import time
-
+from wrapper import wrap_dqn
 
 from easy_tf_log import tflog
 
@@ -33,7 +33,7 @@ def updateTargetModel(model, target_model):
 def huber_loss(y_true, y_pred):
     return tf.losses.huber_loss(y_true,y_pred)
 
-def build_model(input_shape, nA):
+def build_model(input_shape, nA, lr=1e-4):
     model = Sequential()
     model.add(Conv2D(filters=32, kernel_size=8, strides=4, activation='relu', input_shape=input_shape))
     model.add(Conv2D(filters=64, kernel_size=4, strides=2, activation='relu'))
@@ -43,7 +43,7 @@ def build_model(input_shape, nA):
     model.add(Dense(nA))
 
     model.summary()
-    optimizer = Adam(lr=0.00001)
+    optimizer = Adam(lr=lr)
     model.compile(optimizer=optimizer, loss='mse')
 
     return model
@@ -79,9 +79,10 @@ def make_epsilon_greedy_policy(estimator, nA):
 ### Hyperparameter
 max_episodes = 10000
 epsilon_start = 1.0
-epsilon_end = 0.1
+epsilon_end = 0.02
 batch_size = 32
-epsilon_decay_steps = 500000
+lr = 1e-4
+epsilon_decay_steps = 100000
 replay_memory_init_size = 20000
 replay_memory_size = 50000
 update_target_weights_every = 10000
@@ -93,13 +94,14 @@ record_video_every = 50
 
 monitor_path = os.path.abspath("./monitor/")
 env = gym.envs.make('Pong-v0')
+env = wrap_dqn(env)
 nA = env.action_space.n
 obs = env.reset()
 
 nA = env.action_space.n - 3
 print("Action Space :" + str(nA))
-q_estimator = build_model((47,47,4),nA)
-target_estimator = build_model((47,47,4),nA)
+q_estimator = build_model((47,47,4), nA, lr=lr)
+target_estimator = build_model((47,47,4), nA, lr=lr)
 
 t_steps = 0
 replay_memory = []
