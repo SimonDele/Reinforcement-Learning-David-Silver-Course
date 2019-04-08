@@ -92,7 +92,7 @@ record_video_every = 50
 ### Initialisation
 
 monitor_path = os.path.abspath("./monitor/")
-env = gym.envs.make('Pong-v0')
+env = gym.envs.make('PongNoFrameskip-v4')
 nA = env.action_space.n
 obs = env.reset()
 

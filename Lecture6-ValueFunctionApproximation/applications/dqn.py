@@ -81,11 +81,7 @@ max_episodes = 10000
 epsilon_start = 1.0
 epsilon_end = 0.1
 batch_size = 32
-<<<<<<< HEAD
-epsilon_decay_steps = 50000
-=======
 epsilon_decay_steps = 500000
->>>>>>> ad2db93db3c377edda5ed83df9fe142fb1e0bed5
 replay_memory_init_size = 10000
 replay_memory_size = 20000
 update_target_weights_every = 10000
@@ -96,17 +92,11 @@ record_video_every = 50
 ### Initialisation
 
 monitor_path = os.path.abspath("./monitor/")
-<<<<<<< HEAD
-env = gym.envs.make('Pong-v0')
-nA = env.action_space.n - 3 
-obs = env.reset()
-=======
 env = gym.envs.make('Breakout-v0')
 nA = env.action_space.n
 obs = env.reset()
 
 nA = env.action_space.n
->>>>>>> ad2db93db3c377edda5ed83df9fe142fb1e0bed5
 print("Action Space :" + str(nA))
 q_estimator = build_model((84,84,4),nA)
 target_estimator = build_model((84,84,4),nA)
@@ -133,13 +123,8 @@ for _ in tqdm(range(replay_memory_init_size)):
     action_probs = policy(obs, epsilon_start)
     action = np.random.choice(np.arange(len(action_probs)), p=action_probs)
 
-<<<<<<< HEAD
-    new_obs, reward, done, _ = env.step(action + 1)
-    new_obs = preprocessed_img_pong(new_obs)
-=======
     new_obs, reward, done, _ = env.step(action)
     new_obs = preprocessed_img(new_obs)
->>>>>>> ad2db93db3c377edda5ed83df9fe142fb1e0bed5
     new_obs = np.append(obs[:,:,1:], np.expand_dims(new_obs, 2), axis=2)
     
     replay_memory.append((obs, action, reward, new_obs, done))
@@ -180,13 +165,8 @@ for n_episode in range(max_episodes):
         action_probs = policy(obs, epsilon)
         action = np.random.choice(np.arange(len(action_probs)), p=action_probs)
         # Environment step
-<<<<<<< HEAD
-        new_obs, reward, done, _ = env.step(action + 1)
-        new_obs = preprocessed_img_pong(new_obs)
-=======
         new_obs, reward, done, _ = env.step(action)
         new_obs = preprocessed_img(new_obs)
->>>>>>> ad2db93db3c377edda5ed83df9fe142fb1e0bed5
         new_obs = np.append(obs[:,:,1:], np.expand_dims(new_obs, axis=2), axis=2)
 
         if len(replay_memory) >= replay_memory_size:
@@ -211,11 +191,7 @@ for n_episode in range(max_episodes):
         targets_f = q_estimator.predict(states_batch)
         
         for i, action in enumerate(action_batch):
-<<<<<<< HEAD
-            target_f[i,action] = targets[i]
-=======
             targets_f[i,action] = targets[i]
->>>>>>> ad2db93db3c377edda5ed83df9fe142fb1e0bed5
 
         loss = q_estimator.train_on_batch(states_batch, targets_f)
         
