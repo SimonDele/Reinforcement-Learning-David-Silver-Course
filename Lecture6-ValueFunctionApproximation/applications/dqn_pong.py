@@ -19,7 +19,7 @@ import itertools
 import sys, os
 from tqdm import tqdm
 import time
-
+from wrapper import wrap_dqn
 
 from easy_tf_log import tflog
 
@@ -33,7 +33,7 @@ def updateTargetModel(model, target_model):
 def huber_loss(y_true, y_pred):
     return tf.losses.huber_loss(y_true,y_pred)
 
-def build_model(input_shape, nA):
+def build_model(input_shape, nA, lr=1e-4):
     model = Sequential()
     model.add(Conv2D(filters=32, kernel_size=8, strides=4, activation='relu', input_shape=input_shape))
     model.add(Conv2D(filters=64, kernel_size=4, strides=2, activation='relu'))
@@ -43,7 +43,7 @@ def build_model(input_shape, nA):
     model.add(Dense(nA))
 
     model.summary()
-    optimizer = Adam(lr=0.00001)
+    optimizer = Adam(lr=lr)
     model.compile(optimizer=optimizer, loss='mse')
 
     return model
@@ -79,9 +79,10 @@ def make_epsilon_greedy_policy(estimator, nA):
 ### Hyperparameter
 max_episodes = 10000
 epsilon_start = 1.0
-epsilon_end = 0.1
+epsilon_end = 0.02
 batch_size = 32
-epsilon_decay_steps = 500000
+lr = 1e-4
+epsilon_decay_steps = 100000
 replay_memory_init_size = 20000
 replay_memory_size = 50000
 update_target_weights_every = 10000
@@ -93,13 +94,14 @@ record_video_every = 50
 
 monitor_path = os.path.abspath("./monitor/")
 env = gym.envs.make('PongNoFrameskip-v4')
+env = wrap_dqn(env)
 nA = env.action_space.n
 obs = env.reset()
 
 nA = env.action_space.n - 3
 print("Action Space :" + str(nA))
-q_estimator = build_model((47,47,4),nA)
-target_estimator = build_model((47,47,4),nA)
+q_estimator = build_model((47,47,4), nA, lr=lr)
+target_estimator = build_model((47,47,4), nA, lr=lr)
 
 t_steps = 0
 replay_memory = []
@@ -116,7 +118,7 @@ monitor_path = os.path.abspath("./monitor/" + time_readable + "/")
 
 #### Init replay memory
 obs = preprocessed_img_pong(env.reset())
-obs = np.stack([obs] * 4, axis=2) # one_input = 4 * obs
+#obs = np.stack([obs] * 4, axis=2) # one_input = 4 * obs
 
 for _ in tqdm(range(replay_memory_init_size)):
     action_probs = policy(obs, epsilon_start)
@@ -124,13 +126,11 @@ for _ in tqdm(range(replay_memory_init_size)):
 
     new_obs, reward, done, _ = env.step(action + 1)
     new_obs = preprocessed_img_pong(new_obs)
-    new_obs = np.append(obs[:,:,1:], np.expand_dims(new_obs, 2), axis=2)
     
     replay_memory.append((obs, action, reward, new_obs, done))
 
     if done:
         obs = preprocessed_img_pong(env.reset())
-        obs = np.stack([obs] * 4, axis=2) # one_input = 4 * obs
     else: 
         obs = new_obs
 
@@ -142,7 +142,7 @@ for n_episode in range(max_episodes):
 
     obs = env.reset()
     obs = preprocessed_img_pong(obs)
-    obs = np.stack([obs]*4, axis=2)
+    # obs = np.stack([obs]*4, axis=2)
     eps_length = 0
     eps_reward = 0
     eps_loss = 0
@@ -166,7 +166,7 @@ for n_episode in range(max_episodes):
         # Environment step
         new_obs, reward, done, _ = env.step(action + 1)
         new_obs = preprocessed_img_pong(new_obs)
-        new_obs = np.append(obs[:,:,1:], np.expand_dims(new_obs, axis=2), axis=2)
+    #    new_obs = np.append(obs[:,:,1:], np.expand_dims(new_obs, axis=2), axis=2)
 
         if len(replay_memory) >= replay_memory_size:
             replay_memory.pop(0)
