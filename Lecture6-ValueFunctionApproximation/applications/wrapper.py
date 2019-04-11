@@ -140,7 +140,7 @@ class ProcessFrame84(gym.ObservationWrapper):
         img = img[:, :, 0] * 0.299 + img[:, :, 1] * 0.587 + img[:, :, 2] * 0.114
         resized_screen = cv2.resize(img, (84, 110), interpolation=cv2.INTER_AREA)
         x_t = resized_screen[18:102, :]
-        x_t = np.reshape(x_t, [84, 84, 1])
+        x_t = np.reshape(x_t, [84, 84])
         return x_t.astype(np.uint8)
 
 
@@ -193,7 +193,7 @@ class FrameStack(gym.Wrapper):
 
     def _get_ob(self):
         assert len(self.frames) == self.k
-        return LazyFrames(list(self.frames))
+        return list(self.frames)
 
 
 class ScaledFloatFrame(gym.ObservationWrapper):
@@ -224,7 +224,7 @@ def wrap_dqn(env):
     env = MaxAndSkipEnv(env, skip=4)
     if 'FIRE' in env.unwrapped.get_action_meanings():
         env = FireResetEnv(env)
-    #env = ProcessFrame84(env)
+    env = ProcessFrame84(env)
     #env = ImageToPyTorch(env)
     env = FrameStack(env, 4)
     env = ClippedRewardsWrapper(env)
